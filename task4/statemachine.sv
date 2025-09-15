@@ -35,7 +35,7 @@ always_ff @(posedge slow_clock) begin
             `PC2: state <= `DC2;
             `DC2: begin 
                 // if dscore or pscore == 8 or 9, then we move to last state and declare winner
-                if (dscore == 8 || dscore == 9 || pscore == 8 || dscore == 9) begin 
+                if (dscore == 8 || dscore == 9 || pscore == 8 || pscore == 9) begin 
                     state <= `declareWinner;
                 end
                 //else if pscore is 0 (10, J, Q, K) - 5, we deal 3rd card to player
@@ -102,6 +102,7 @@ always_ff @(posedge slow_clock) begin
                 endcase   
             end
             `DC3: state <= `declareWinner;
+            `declareWinner: state <= `declareWinner; //after declaring winner, we reset to initial state
             default: state <= `PC1; //just in case we get an illegal value, we will reset to initial state    
         endcase
     end
