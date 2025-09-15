@@ -9,12 +9,6 @@ module datapath(input logic slow_clock, input logic fast_clock, input logic rese
 // Card value registers
 logic [3:0] new_card, pc1_value, pc2_value, pc3_value, dc1_value, dc2_value, dc3_value;
 
-//assign pc1_value = 4'b0000;
-//assign pc2_value = 4'b0000;
-//assign pc3_value = 4'b0000;
-//assign dc1_value = 4'b0000;
-//assign dc2_value = 4'b0000;
-//assign dc3_value = 4'b0000;
 always_comb begin
     // Convert face cards to 0
     if (pc3_value >= 4'b1010) begin
