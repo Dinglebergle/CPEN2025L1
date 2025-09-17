@@ -1,18 +1,18 @@
 // 7-segment display encoding macros to make case statements more readable, and to avoid mistakes in the bit encodings
 `define HEX_BLANK 7'b1111111
 `define HEX_A     7'b0001000
-`define HEX_2     7'b0010010
-`define HEX_3     7'b0000110
-`define HEX_4     7'b1001100
-`define HEX_5     7'b0100100
-`define HEX_6     7'b0100000
-`define HEX_7     7'b0001111
+`define HEX_2     7'b0100100
+`define HEX_3     7'b0110000
+`define HEX_4     7'b0011001
+`define HEX_5     7'b0010010
+`define HEX_6     7'b0000010
+`define HEX_7     7'b1111000
 `define HEX_8     7'b0000000
-`define HEX_9     7'b0000100
+`define HEX_9     7'b0010000
 `define HEX_0     7'b1000000 
-`define HEX_J     7'b1100000
-`define HEX_Q     7'b1110001
-`define HEX_K     7'b1111001
+`define HEX_J     7'b1100001
+`define HEX_Q     7'b0011000
+`define HEX_K     7'b0001001
 
 
 
@@ -28,17 +28,15 @@ module tb_card7seg();
 
             #1;
 
-            if (HEX0 !== expected) begin
-                $error("Test failed for input %b: expected %b, got %b", sw_in, expected, HEX0);
-            end else begin
+            if (HEX0 == expected) begin
                 $display("Test passed for input %b: got %b", sw_in, HEX0);
+            end else begin
+                $error("Test failed for input %b: expected %b, got %b", sw_in, expected, HEX0);
             end
-
             #1;
             SW = 4'b0000; // Reset to blank
             #1;
         end
-        
     endtask 
 
 
