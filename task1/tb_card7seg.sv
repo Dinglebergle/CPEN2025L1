@@ -9,7 +9,7 @@
 `define HEX_7     7'b1111000
 `define HEX_8     7'b0000000
 `define HEX_9     7'b0010000
-`define HEX_0     7'b1000000 
+`define HEX_10    7'b1000000 
 `define HEX_J     7'b1100001
 `define HEX_Q     7'b0011000
 `define HEX_K     7'b0001001
@@ -54,7 +54,7 @@ module tb_card7seg();
         test_hex(4'b0111, `HEX_7);     // 7
         test_hex(4'b1000, `HEX_8);     // 8
         test_hex(4'b1001, `HEX_9);     // 9
-        test_hex(4'b1010, `HEX_0);     // 10
+        test_hex(4'b1010, `HEX_10);     // 10
         test_hex(4'b1011, `HEX_J);     // J
         test_hex(4'b1100, `HEX_Q);     // Q
         test_hex(4'b1101, `HEX_K);     // K
