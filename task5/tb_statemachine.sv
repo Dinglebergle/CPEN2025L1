@@ -117,7 +117,41 @@ initial begin
     // Reset the state machine
     resetb = 0;
     clk_tick();
-    
+
+
+    // Testing PC1 state
+    $display("Testing PC1 state-------------------");
+    resetb = 1;
+    check_statemachine(`PC1, 1, 0, 0, 0, 0, 0, 0, 0); //should be in PC1 state
+
+    reset_test();
+
+    // Testing DC1 state
+    $display("Testing DC1 state-------------------");
+    resetb = 1;
+    clk_tick();
+    check_statemachine(`DC1, 0, 0, 0, 1, 0, 0, 0, 0); //should be in DC1 state
+
+    reset_test();
+
+    // Testing PC2 state
+    $display("Testing PC2 state-------------------");
+    resetb = 1;
+    clk_tick();
+    clk_tick();
+    check_statemachine(`PC2, 0, 1, 0, 0, 0, 0, 0, 0); //should be in PC2 state
+
+    reset_test();
+
+    // Testing DC2 state
+    $display("Testing DC2 state-------------------");
+    resetb = 1;
+    clk_tick();
+    clk_tick();
+    clk_tick();
+    check_statemachine(`DC2, 0, 0, 0, 0, 1, 0, 0, 0); //should be in DC2 state
+
+    reset_test();
 
     // Testing statemachine with player natural win
     $display("Testing statemachine with player natural win-------------------");
@@ -187,7 +221,6 @@ initial begin
     check_statemachine(`declareWinner, 0, 0, 0, 0, 0, 0, 0, 1); //Dealer win
 
     reset_test();
-    check_statemachine(`PC1, 1, 0, 0, 0, 0, 0, 0, 0); //should be in PC1 state after reset
 
     //Testing statemachine with cards: P 5, 2 | D 1, 4, 1 (Dealer should get 3 cards, Player stays with 2, player wins)
     $display("Testing statemachine with cards: P 5, 2 | D 1, 4, 1--------------");
