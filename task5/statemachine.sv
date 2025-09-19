@@ -44,12 +44,12 @@ always_comb begin
                 next_state = `declareWinner;
             end
             //else if pscore is 0 (10, J, Q, K) - 5, we deal 3rd card to player
-            else if (0 <= pscore  && pscore <= 5 ) begin
+            else if (0 <= pscore && pscore <= 5 ) begin
                 next_state = `PC3;
             end
             //else if pscore is 6 or 7, we check dscore to see if we deal 3rd card to dealer
             else if (pscore == 6 || pscore == 7) begin
-                if (0 <= dscore <= 5) begin
+                if (0 <= dscore && dscore <= 5) begin
                     next_state = `DC3;
                 end
                 else begin
@@ -65,7 +65,7 @@ always_comb begin
             case(dscore)
                 //if dscore is 6, pcard3 must be 6 or 7 to deal dealer 3rd card
                 6: begin
-                    if (6 <= pcard3 <= 7) begin
+                    if (6 <= pcard3 && pcard3 <= 7) begin
                         next_state = `DC3;
                     end
                     else begin
@@ -74,7 +74,7 @@ always_comb begin
                 end
                 //if dscore is 5, pcard3 must be 4 - 7 to deal dealer 3rd card
                 5: begin
-                    if (4 <= pcard3 <= 7) begin
+                    if (4 <= pcard3 && pcard3 <= 7) begin
                         next_state = `DC3;
                     end
                     else begin
@@ -83,7 +83,7 @@ always_comb begin
                 end
                 //if dscore is 4, pcard3 must be 2 - 7 to deal dealer 3rd card
                 4: begin
-                    if (2 <= pcard3 <= 7) begin
+                    if (2 <= pcard3 && pcard3 <= 7) begin
                         next_state = `DC3;
                     end
                     else begin
