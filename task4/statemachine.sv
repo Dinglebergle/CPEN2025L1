@@ -21,7 +21,7 @@ logic [2:0] state, next_state;
 `define DC3 3'b101
 `define declareWinner 3'b110
 
-// Determine next state
+// Set current state
 always_ff @(posedge slow_clock) begin
     if(resetb == 0) begin //synchronous reset
         state <= `PC1;
@@ -31,32 +31,33 @@ always_ff @(posedge slow_clock) begin
     end
 end
 
+// Determine next state
 always_comb begin
     case (state) 
 
-        `PC1: next_state <= `DC1;
-        `DC1: next_state <= `PC2;
-        `PC2: next_state <= `DC2;
+        `PC1: next_state = `DC1;
+        `DC1: next_state = `PC2;
+        `PC2: next_state = `DC2;
         `DC2: begin 
             // if dscore or pscore == 8 or 9, then we move to last state and declare winner
             if (dscore == 8 || dscore == 9 || pscore == 8 || pscore == 9) begin 
-                next_state <= `declareWinner;
+                next_state = `declareWinner;
             end
             //else if pscore is 0 (10, J, Q, K) - 5, we deal 3rd card to player
             else if (0 <= pscore  && pscore <= 5 ) begin
-                next_state <= `PC3;
+                next_state = `PC3;
             end
             //else if pscore is 6 or 7, we check dscore to see if we deal 3rd card to dealer
             else if (pscore == 6 || pscore == 7) begin
                 if (0 <= dscore <= 5) begin
-                    next_state <= `DC3;
+                    next_state = `DC3;
                 end
                 else begin
-                    next_state <= `declareWinner;
+                    next_state = `declareWinner;
                 end
             end
             else begin //just in case we get an illegal value, we will declare winner as a default state for now
-                next_state <= `declareWinner;
+                next_state = `declareWinner;
             end
         end
 
@@ -65,49 +66,49 @@ always_comb begin
                 //if dscore is 6, pcard3 must be 6 or 7 to deal dealer 3rd card
                 6: begin
                     if (6 <= pcard3 <= 7) begin
-                        next_state <= `DC3;
+                        next_state = `DC3;
                     end
                     else begin
-                        next_state <= `declareWinner;
+                        next_state = `declareWinner;
                     end
                 end
                 //if dscore is 5, pcard3 must be 4 - 7 to deal dealer 3rd card
                 5: begin
                     if (4 <= pcard3 <= 7) begin
-                        next_state <= `DC3;
+                        next_state = `DC3;
                     end
                     else begin
-                        next_state <= `declareWinner;
+                        next_state = `declareWinner;
                     end
                 end
                 //if dscore is 4, pcard3 must be 2 - 7 to deal dealer 3rd card
                 4: begin
                     if (2 <= pcard3 <= 7) begin
-                        next_state <= `DC3;
+                        next_state = `DC3;
                     end
                     else begin
-                        next_state <= `declareWinner;
+                        next_state = `declareWinner;
                     end
                 end      
                 //if dscore is 3, pcard3 must not be equal to 8 to deal dealer 3rd card
                 3: begin
                     if (pcard3 != 8) begin
-                        next_state <= `DC3;
+                        next_state = `DC3;
                     end
                     else begin
-                        next_state <= `declareWinner;
+                        next_state = `declareWinner;
                     end
                 end
                 //else dealer gets 3rd card
-                2: next_state <= `DC3;
-                1: next_state <=`DC3;
-                0: next_state <=`DC3;
-                default: next_state <= `declareWinner; //if score is 7 then declare winner or in case we get an illegal value, we will declare winner as a default state for now
+                2: next_state = `DC3;
+                1: next_state = `DC3;
+                0: next_state =`DC3;
+                default: next_state = `declareWinner; //if score is 7 then declare winner or in case we get an illegal value, we will declare winner as a default state for now
             endcase   
         end
-        `DC3: next_state <= `declareWinner;
-        `declareWinner: next_state <= `declareWinner; //after declaring winner, we reset to initial state
-        default: next_state <= `PC1; //just in case we get an illegal value, we will reset to initial state    
+        `DC3: next_state = `declareWinner;
+        `declareWinner: next_state = `declareWinner; //after declaring winner, we reset to initial state
+        default: next_state = `PC1; //just in case we get an illegal value, we will reset to initial state
     endcase
 end
 
