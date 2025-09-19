@@ -146,61 +146,7 @@ module tb_datapath();
 
         reset();
 
-        $display("Testing load card player turn 1-------------------");
-        load_pcard1 = 1;
-        slow_clock_cycle(); // Player dealt Ace card on turn 1
-        load_pcard1 = 0;
-        check_hex(HEX0, `HEX_A); // Check HEX0 shows Ace
-        check_score(pscore_out, 4'd1); // Check player score is 1
-        
-        $display("Testing load card dealer turn 1-------------------");
-        fast_clock_cycle();
-        fast_clock_cycle();
-        load_dcard1 = 1;
-        slow_clock_cycle(); // Dealer dealt 3 card on turn 1
-        load_dcard1 = 0;
-        check_hex(HEX3, `HEX_3); // Check HEX3 shows 3
-        check_score(dscore_out, 4'd3); // Check dealer score is 3
-
-        $display("Testing load card player turn 2-------------------");
-        fast_clock_cycle();
-        fast_clock_cycle();
-        load_pcard2 = 1;
-        slow_clock_cycle(); // Player dealt 5 card on turn 2
-        load_pcard2 = 0;
-        check_hex(HEX1, `HEX_5); // Check HEX1 shows 5
-        check_score(pscore_out, 4'd6); // Check player score is 6
-
-        $display("Testing load card dealer turn 2-------------------");
-        fast_clock_cycle();
-        fast_clock_cycle();
-        load_dcard2 = 1;
-        slow_clock_cycle(); // Dealer dealt 7 card on turn 2
-        load_dcard2 = 0;
-        check_hex(HEX4, `HEX_7); // Check HEX3 shows 7
-        check_score(dscore_out, 4'd0); // Check dealer score is 0 (mod 10 of 3 + 7)
-
-        $display("Testing load card player turn 3-------------------");
-        fast_clock_cycle();
-        fast_clock_cycle();
-        load_pcard3 = 1;
-        slow_clock_cycle(); // Player dealt 9 card on turn 3
-        load_pcard3 = 0;
-        check_player_card3(4'd9); // Check player card 3 value is 9
-        check_hex(HEX2, `HEX_9); // Check HEX2 shows 9
-        check_score(pscore_out, 4'd5); // Check player score is 5 (mod 10 of 1 + 5 + 9)
-
-        $display("Testing load card dealer turn 3-------------------");
-        fast_clock_cycle();
-        fast_clock_cycle();
-        load_dcard3 = 1;
-        slow_clock_cycle(); // Dealer dealt Jack card on turn 3
-        load_dcard3 = 0;
-        check_hex(HEX5, `HEX_J); // Check HEX5 shows Jack
-        check_score(dscore_out, 4'd0); // Check dealer score is 0 (mod 10 of 3 + 7 + 0)
-
         $display("Testing reset-------------------");
-        reset();
         check_hex(HEX0, `HEX_BLANK); // Check HEX0 shows blank
         check_hex(HEX1, `HEX_BLANK); // Check HEX1 shows blank
         check_hex(HEX2, `HEX_BLANK); // Check HEX2 shows blank
@@ -210,6 +156,98 @@ module tb_datapath();
         check_score(pscore_out, 4'd0); // Check player score is 0
         check_score(dscore_out, 4'd0); // Check dealer score is 0
         check_player_card3(4'd0); // Check player card 3 value is 0
+
+        reset();
+
+        $display("Testing load card player turn 1-------------------");
+        load_pcard1 = 1;
+        slow_clock_cycle(); // Player dealt Ace card on turn 1
+        load_pcard1 = 0;
+        check_player_card3(4'd0); // Check player card 3 value is 0
+        check_hex(HEX0, `HEX_A); // Check HEX0 shows Ace
+        check_score(pscore_out, 4'd1); // Check player score is 1
+
+        reset();
+        
+        $display("Testing load card dealer turn 1-------------------");
+        fast_clock_cycle();
+        fast_clock_cycle();
+        load_dcard1 = 1;
+        slow_clock_cycle(); // Dealer dealt 3 card on turn 1
+        load_dcard1 = 0;
+        check_player_card3(4'd0); // Check player card 3 value is 0
+        check_hex(HEX3, `HEX_3); // Check HEX3 shows 3
+        check_score(dscore_out, 4'd3); // Check dealer score is 3
+
+        reset();
+
+        $display("Testing load card player turn 2-------------------");
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        load_pcard2 = 1;
+        slow_clock_cycle(); // Player dealt 5 card on turn 2
+        load_pcard2 = 0;
+        check_player_card3(4'd0); // Check player card 3 value is 0
+        check_hex(HEX1, `HEX_5); // Check HEX1 shows 5
+        check_score(pscore_out, 4'd5); // Check player score is 5
+
+        reset();
+
+        $display("Testing load card dealer turn 2-------------------");
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        load_dcard2 = 1;
+        slow_clock_cycle(); // Dealer dealt 7 card on turn 2
+        load_dcard2 = 0;
+        check_player_card3(4'd0); // Check player card 3 value is 0
+        check_hex(HEX4, `HEX_7); // Check HEX3 shows 7
+        check_score(dscore_out, 4'd7); // Check dealer score is 7
+
+        reset();
+
+        $display("Testing load card player turn 3-------------------");
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        load_pcard3 = 1;
+        slow_clock_cycle(); // Player dealt 9 card on turn 3
+        load_pcard3 = 0;
+        check_player_card3(4'd9); // Check player card 3 value is 9
+        check_hex(HEX2, `HEX_9); // Check HEX2 shows 9
+        check_score(pscore_out, 4'd9); // Check player score is 9
+
+        reset();
+
+        $display("Testing load card dealer turn 3-------------------");
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        fast_clock_cycle();
+        load_dcard3 = 1;
+        slow_clock_cycle(); // Dealer dealt Jack card on turn 3
+        load_dcard3 = 0;
+        check_player_card3(4'd0); // Check player card 3 value is 0
+        check_hex(HEX5, `HEX_J); // Check HEX5 shows Jack
+        check_score(dscore_out, 4'd0); // Check dealer score is 0
+
+        reset();
 
         // End of testing
         $display("\n\nTEST SUMMARY");
