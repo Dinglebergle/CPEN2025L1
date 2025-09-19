@@ -154,6 +154,7 @@ initial begin
     resetb = 1;
     pscore = 3;
     dscore = 7;
+    pcard3 = 0;
     clk_tick();
     clk_tick();
     clk_tick();
@@ -171,6 +172,7 @@ initial begin
     resetb = 1;
     pscore = 4;
     dscore = 6;
+    pcard3 = 0;
     clk_tick();
     clk_tick();
     clk_tick();
@@ -192,6 +194,7 @@ initial begin
     resetb = 1;
     pscore = 7;
     dscore = 5;
+    pcard3 = 0;
     clk_tick();
     clk_tick();
     clk_tick();
@@ -209,6 +212,7 @@ initial begin
     resetb = 1;
     pscore = 5;
     dscore = 6;
+    pcard3 = 0;
     clk_tick();
     clk_tick();
     clk_tick();
