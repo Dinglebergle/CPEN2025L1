@@ -3,9 +3,10 @@
 `define DC1 3'b001
 `define PC2 3'b010
 `define DC2 3'b011
-`define PC3 3'b100
-`define DC3 3'b101
-`define declareWinner 3'b110
+`define EvalScore 3'b100
+`define PC3 3'b101
+`define DC3 3'b110
+`define declareWinner 3'b111
 
 module tb_statemachine();
 

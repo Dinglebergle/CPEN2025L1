@@ -17,9 +17,10 @@ logic [2:0] state, next_state;
 `define DC1 3'b001
 `define PC2 3'b010
 `define DC2 3'b011
-`define PC3 3'b100
-`define DC3 3'b101
-`define declareWinner 3'b110
+`define EvalScore 3'b100
+`define PC3 3'b101
+`define DC3 3'b110
+`define declareWinner 3'b111
 
 // Set current state
 always_ff @(posedge slow_clock) begin
@@ -34,11 +35,11 @@ end
 // Determine next state
 always_comb begin
     case (state) 
-
         `PC1: next_state = `DC1;
         `DC1: next_state = `PC2;
         `PC2: next_state = `DC2;
-        `DC2: begin 
+        `DC2: next_state = `EvalScore; // Take time to evaluate scores after dealing 2nd cards
+        `EvalScore: begin
             // if dscore or pscore == 8 or 9, then we move to last state and declare winner
             if (dscore == 8 || dscore == 9 || pscore == 8 || pscore == 9) begin 
                 next_state = `declareWinner;
@@ -60,7 +61,6 @@ always_comb begin
                 next_state = `declareWinner;
             end
         end
-
         `PC3: begin
             // We don't know the value of pcard3 until the next clock edge, so for the dscore range below we must go to DC3 to verify if 3rd dealer card should be dealt
             if (0 <= dscore && dscore <= 6) begin
