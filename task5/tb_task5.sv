@@ -211,6 +211,7 @@ module tb_task5();
         slow_clock_cycle();
         slow_clock_cycle();
         slow_clock_cycle();
+        slow_clock_cycle();
         // Deal 10 card
         fast_clock_cycle();
         fast_clock_cycle();
@@ -231,6 +232,7 @@ module tb_task5();
         // Testing DC3 state
         $display("Testing DC3 state-------------------");
         // Get to DC3 state and load player card 1 (Ace), dealer card 1 (Ace), player card 2 (Ace), dealer card 2 (Ace), player card 3 (Ace)
+        slow_clock_cycle();
         slow_clock_cycle();
         slow_clock_cycle();
         slow_clock_cycle();
@@ -264,13 +266,16 @@ module tb_task5();
         fast_clock_cycle();
         // Cycle to declareWinner state
         slow_clock_cycle();
+        slow_clock_cycle();
         check_led({dealer_win_light, player_win_light, dscore, pscore}, {1'b0, 1'b1, 4'b0001, 4'b1001}); // Check player_win_light is on, dealer score is 1 and player score is 9
 
         reset();
 
         // Testing dealer win
         $display("Testing dealer win-------------------");
-        // Get to DC1 state and load player card 1 (Ace)
+        // Get to DC1 state and load player card 1 (Ace), dealer card 1 (Ace), player card 2 (Ace)
+        slow_clock_cycle();
+        slow_clock_cycle();
         slow_clock_cycle();
         // Deal 8 card to dealer card 1
         fast_clock_cycle();
@@ -280,17 +285,10 @@ module tb_task5();
         fast_clock_cycle();
         fast_clock_cycle();
         fast_clock_cycle();
-        // Get to PC2 state and load dealer card 1 (8)
+        // Cycle to declareWinner state and load dealer card 2 (8)
         slow_clock_cycle();
-        // Deal 9 card to player card 2
-        fast_clock_cycle();
-        // Get to DC2 state and load player card 2 (9)
         slow_clock_cycle();
-        // Deal 10 card to dealer card 2
-        fast_clock_cycle();
-        // Cycle to declareWinner state and load dealer card 2 (10)
-        slow_clock_cycle();
-        check_led({dealer_win_light, player_win_light, dscore, pscore}, {1'b1, 1'b0, 4'b1000, 4'b0000}); // Check dealer_win_light is on, dealer score is 8 and player score is 0
+        check_led({dealer_win_light, player_win_light, dscore, pscore}, {1'b1, 1'b0, 4'b1001, 4'b0010}); // Check dealer_win_light is on, dealer score is 9 and player score is 2
 
         reset();
 
