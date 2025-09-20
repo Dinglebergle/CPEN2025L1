@@ -61,50 +61,13 @@ always_comb begin
             end
         end
 
-        `PC3: begin //
-            case(dscore)
-                //if dscore is 6, pcard3 must be 6 or 7 to deal dealer 3rd card
-                6: begin
-                    if (6 <= pcard3 && pcard3 <= 7) begin
-                        next_state = `DC3;
-                    end
-                    else begin
-                        next_state = `declareWinner;
-                    end
-                end
-                //if dscore is 5, pcard3 must be 4 - 7 to deal dealer 3rd card
-                5: begin
-                    if (4 <= pcard3 && pcard3 <= 7) begin
-                        next_state = `DC3;
-                    end
-                    else begin
-                        next_state = `declareWinner;
-                    end
-                end
-                //if dscore is 4, pcard3 must be 2 - 7 to deal dealer 3rd card
-                4: begin
-                    if (2 <= pcard3 && pcard3 <= 7) begin
-                        next_state = `DC3;
-                    end
-                    else begin
-                        next_state = `declareWinner;
-                    end
-                end      
-                //if dscore is 3, pcard3 must not be equal to 8 to deal dealer 3rd card
-                3: begin
-                    if (pcard3 != 8) begin
-                        next_state = `DC3;
-                    end
-                    else begin
-                        next_state = `declareWinner;
-                    end
-                end
-                //else dealer gets 3rd card
-                2: next_state = `DC3;
-                1: next_state = `DC3;
-                0: next_state =`DC3;
-                default: next_state = `declareWinner; //if score is 7 then declare winner or in case we get an illegal value, we will declare winner as a default state for now
-            endcase   
+        `PC3: begin
+            // We don't know the value of pcard3 until the next clock edge, so for the dscore range below we must go to DC3 to verify if 3rd dealer card should be dealt
+            if (0 <= dscore && dscore <= 6) begin
+                next_state = `DC3;
+            end else begin
+                next_state = `declareWinner;
+            end
         end
         `DC3: next_state = `declareWinner;
         `declareWinner: next_state = `declareWinner; //after declaring winner, we reset to initial state
@@ -172,7 +135,19 @@ always_comb begin
             load_pcard2 = 0;
             load_dcard2 = 0;
             load_pcard3 = 0;
-            load_dcard3 = 1;
+            if (dscore == 6 && (6 <= pcard3 && pcard3 <= 7)) begin
+                load_dcard3 = 1;
+            end else if (dscore == 5 && (4 <= pcard3 && pcard3 <= 7)) begin
+                load_dcard3 = 1;
+            end else if (dscore == 4 && (2 <= pcard3 && pcard3 <= 7)) begin
+                load_dcard3 = 1;
+            end else if (dscore == 3 && (pcard3 != 8)) begin
+                load_dcard3 = 1;
+            end else if (0 <= dscore && dscore <= 2) begin
+                load_dcard3 = 1;
+            end else begin
+                load_dcard3 = 0;
+            end
             player_win_light = 0;
             dealer_win_light = 0;
         end
